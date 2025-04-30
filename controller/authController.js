@@ -1,6 +1,7 @@
 import userModel from '../models/userModel.js';
 import bcrypt from "bcryptjs";
 import JWT from "jsonwebtoken";
+import { sendWelcomeEmail } from '../utils/mailer.js';
 // import {NotFoundError} from "../utils/ApiError.js";
 
 export const registerController = async (req, res) => {
@@ -25,6 +26,14 @@ export const registerController = async (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     const hashPassword = await bcrypt.hash(password, salt);
     const user = await userModel.create({ userName, email, password : hashPassword, phone, address });
+    
+    try {
+      await sendWelcomeEmail(user.email, user.userName);
+      res.status(201).json({ message: 'User registered and email sent!' });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Registration succeeded but email failed.' });
+    }
     if (user) {
       return res.status(201).send({
         success: true,
