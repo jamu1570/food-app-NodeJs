@@ -7,8 +7,9 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "cross-env NODE_ENV=development nodemon server.js",
+    "test": "jest",
+    "dev": "cross-env NODE_ENV=development nodemon server.js",
+    "server": "cross-env NODE_ENV=production nodemon server.js",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",
@@ -37,17 +38,21 @@
     "multer": "^1.4.5-lts.2",
     "nodemailer": "^6.10.1",
     "nodemon": "^3.1.9",
+    "supertest": "^7.1.0",
     "swagger-autogen": "^2.23.7",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.27.1",
     "@eslint/js": "^9.25.1",
+    "babel-jest": "^29.7.0",
     "cross-env": "^7.0.3",
     "eslint": "^9.25.1",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-prettier": "^5.2.6",
     "eslint-plugin-react": "^7.37.5",
     "globals": "^16.0.0",
+    "jest": "^29.7.0",
     "prettier": "^3.5.3"
   }
 }

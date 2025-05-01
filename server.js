@@ -14,12 +14,11 @@ import { readFileSync } from 'fs';
 // import mongoSanitize from 'express-mongo-sanitize';
 
 // Force set NODE_ENV
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env';
+dotenv.config({ path: envFile });
 
 
 const swaggerFile = JSON.parse(readFileSync('./swagger_output.json', 'utf8'));
-
-dotenv.config();
 
 // DB connection
 connectDB();
@@ -64,8 +63,10 @@ app.get('/', (req, res) => {
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 // eslint-disable-next-line no-undef
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
-  console.log(`server running on ${PORT}`);
+  console.log(`server running on ${PORT}, running in  ${process.env.NODE_ENV}`);
 });
+
+export default app;

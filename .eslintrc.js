@@ -16,5 +16,13 @@ export default [{
       quotes: ['error', 'single'],
       indent: ['error', 2],
     },
+    overrides: [
+      {
+        files: ['**/*.test.js'], // or '*.spec.js'
+        env: {
+          jest: true,
+        },
+      },
+    ]  
   }];
   
